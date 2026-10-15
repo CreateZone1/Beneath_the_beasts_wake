@@ -11,8 +11,8 @@ size = Vector3(5.6671143, 3.3727722, 4.6419697)
 size = Vector3(1, 2.9943848, 0.75250244)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t2y0b"]
-radius = 2.084961
-height = 6.3513184
+radius = 1.2519531
+height = 4.359253
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0o41"]
 shading_mode = 0
@@ -20,9 +20,10 @@ albedo_color = Color(1, 0, 0.25490198, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_u0o41"]
 
-[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent")]
+[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point")]
 script = ExtResource("1_tntu3")
 agent = NodePath("NavigationAgent3D")
+point = NodePath("grabpoint")
 
 [node name="mesh" type="CSGBox3D" parent="."]
 transform = Transform3D(-0.029404499, 0, -0.9995676, 0, 1, 0, 0.9995676, 0, -0.029404499, 0.50442183, 3.534679, -0.09365034)
@@ -36,7 +37,7 @@ size = Vector3(3.5177002, 3.194168, 3.4454346)
 
 [node name="Area3D2" type="Area3D" parent="mesh/CSGBox3D3" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
-main = NodePath("..")
+main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D3/Area3D2" groups=["escalable"]]
 transform = Transform3D(1, 0, 1.937151e-07, 0, 1, 0, -1.937151e-07, 0, 1, 0.9595605, 0.08073425, -0.36265972)
@@ -64,7 +65,7 @@ size = Vector3(1.0136719, 2.8746033, 0.71795654)
 
 [node name="Area3D" type="Area3D" parent="mesh/CSGBox3D4" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
-main = NodePath("..")
+main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D4/Area3D"]
 transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
@@ -78,7 +79,7 @@ size = Vector3(1.0136719, 2.8746033, 0.71795654)
 
 [node name="Area3D" type="Area3D" parent="mesh/CSGBox3D5" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
-main = NodePath("..")
+main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D5/Area3D"]
 transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
@@ -92,7 +93,7 @@ size = Vector3(1.0136719, 2.8746033, 0.71795654)
 
 [node name="Area3D" type="Area3D" parent="mesh/CSGBox3D6" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
-main = NodePath("..")
+main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D6/Area3D"]
 transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
@@ -104,7 +105,7 @@ size = Vector3(1.0136719, 2.8746033, 0.71795654)
 
 [node name="Area3D" type="Area3D" parent="mesh/CSGBox3D7" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
-main = NodePath("..")
+main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D7/Area3D" groups=["escalable"]]
 transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
@@ -113,7 +114,7 @@ shape = SubResource("BoxShape3D_tntu3")
 [node name="pivot" type="Node3D" parent="mesh/CSGBox3D7"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5672085, 3.1500816, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.91826797, 2.154049, -0.7864897)
 shape = SubResource("CapsuleShape3D_t2y0b")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
@@ -126,6 +127,7 @@ pivot = NodePath("../pivoit")
 grabpoint = NodePath("../grabpoint")
 
 [node name="grabpoint" type="Node3D" parent="."]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="grabpoint"]
 transform = Transform3D(0.265, 0, 0, 0, 0.265, 0, 0, 0, 0.265, 0, 0, 0)
@@ -134,9 +136,10 @@ mesh = SubResource("SphereMesh_u0o41")
 
 [node name="pivoit" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6351452, 2.758779, -1.7338953)
+visible = false
 
 [node name="RayCast3D" type="RayCast3D" parent="pivoit"]
-transform = Transform3D(0.041247897, 0, 0.9991491, 0, 1, 0, -0.99914896, 0, 0.0412479, 3.8369825, -2.078164, 3.222609)
+transform = Transform3D(0.041247897, 0, 0.9991491, 0, 1, 0, -0.99914896, 0, 0.0412479, 0.08254242, 1.5312123, -4.342544)
 target_position = Vector3(0, 0, -7.055)
 collide_with_areas = true
 collide_with_bodies = false
@@ -145,6 +148,5 @@ collide_with_bodies = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="pivoit"]
 
-[node name="RayCast3D2" type="RayCast3D" parent="pivoit"]
-transform = Transform3D(-0.6431886, 0.7657078, 0, -0.7657078, -0.6431886, 0, 0, 0, 1, 3.5355625, 0, 0)
-target_position = Vector3(0, -2.885, 0)
+[node name="CSGBox3D2" type="CSGBox3D" parent="pivoit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.3630176)

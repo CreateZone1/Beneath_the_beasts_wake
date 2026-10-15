@@ -7,20 +7,29 @@ extends CharacterBody3D
 @export var walkspeed := 2.0
 @export var rotspeed := 0.6
 @export var active = true
+@export var point:=Node3D
 var realpivot :Node3D
+@export var pivot:Node3D
+@onready var raycast_pivot: Node3D = $RaycastPivot
+
 var index = 0
 var rotating = false
-
+var being_climbed = false
+var player
 func _ready() -> void:
+	player = get_tree().get_first_node_in_group("Player")
 	if poses.size() > 0:
 		target_obj = poses[index]
 		agent.target_position = target_obj.global_position
 
 func _physics_process(delta: float) -> void:
+	
+	raycast_pivot.being_climbed = being_climbed 
+		
 	if active:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
-
+			
 		if agent.is_navigation_finished():
 			upd()
 

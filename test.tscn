@@ -42,7 +42,6 @@ transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70
 speed = 4.0
 target_obj = NodePath("../1")
 poses = [NodePath("../1"), NodePath("../2"), NodePath("../3"), NodePath("../34")]
-active = false
 
 [node name="1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.490746, 0, 0)

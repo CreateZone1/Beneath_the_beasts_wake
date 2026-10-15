@@ -22,10 +22,11 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 func _physics_process(delta: float) -> void:
 	speed_control()
-	#keyscontrol()
-	handle_movement(delta)
-	
-
+	keyscontrol()
+	if !is_climbing:
+		handle_movement(delta)
+	else:
+		handle_climb_sistem(delta)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -36,10 +37,15 @@ func keyscontrol():
 	if Input.is_action_just_pressed("esc"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if Input.is_action_just_pressed("climb") and can_climb:
+		print("fase2")
 		is_climbing = true
 		point = mamoot.point
+		mamoot.being_climbed = true
 	if can_climb == false:
+		print("fase3")
 		is_climbing = false
+		if mamoot:
+			mamoot.being_climbed = false
 func speed_control():
 	if Input.is_action_pressed("run"):
 		running= true
@@ -51,7 +57,9 @@ func speed_control():
 		false:
 			SPEED = walk_speed
 func handle_climb_sistem(delta):
-	global_position = point.global_position
+	var newpos = Vector3(point.global_position.x,point.global_position.y-1,point.global_position.z)
+	global_position = newpos
+	
 func handle_movement(delta):
 	#global_position = point.global_position
 	if not is_on_floor():
@@ -72,5 +80,6 @@ func handle_movement(delta):
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area.is_in_group("escalable"):
+		print("fase1")
 		can_climb = true
 		mamoot = area.main	

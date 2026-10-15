@@ -12,7 +12,7 @@ height = 1.8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model") groups=["Exclude"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model") groups=["Exclude", "Player"]]
 script = ExtResource("1_4flbx")
 pivot = NodePath("Node3D")
 sprarm = NodePath("Node3D/SpringArm3D")
