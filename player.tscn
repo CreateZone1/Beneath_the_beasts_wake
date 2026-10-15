@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cf4bjoq4jo1nl"]
+
+[ext_resource type="Script" uid="uid://dfxb37rf7f7xf" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+height = 1.7426758
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
+height = 1.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model") groups=["Exclude"]]
+script = ExtResource("1_4flbx")
+pivot = NodePath("Node3D")
+sprarm = NodePath("Node3D/SpringArm3D")
+camera = NodePath("Node3D/SpringArm3D/Camera3D")
+model = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9811746, 0)
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9907106, 0)
+mesh = SubResource("CapsuleMesh_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.3, 0, 0, 0, 0.5772173, 0, 0.611398, -0.3070115)
+mesh = SubResource("BoxMesh_4flbx")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.027473569, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96323705, 0)
+spring_length = 3.45
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.96323705, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7162747, -0.45851767)
+shape = SubResource("BoxShape3D_4flbx")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
