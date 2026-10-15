@@ -12,12 +12,13 @@ height = 1.8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model") groups=["Exclude", "Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model", "climbarea") groups=["Exclude", "Player"]]
 script = ExtResource("1_4flbx")
 pivot = NodePath("Node3D")
 sprarm = NodePath("Node3D/SpringArm3D")
 camera = NodePath("Node3D/SpringArm3D/Camera3D")
 model = NodePath("MeshInstance3D")
+climbarea = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9811746, 0)

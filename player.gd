@@ -5,6 +5,7 @@ var SPEED = 3.0
 var JUMP_VELOCITY = 2.5
 @export var walk_speed:=3.0
 @export var run_speed:=5.0
+@export var climbspeed:=2.0
 var running = false
 @export var sens = 0.002
 @export var pivot:Node3D
@@ -23,6 +24,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	speed_control()
 	keyscontrol()
+	print(mamoot)
 	if !is_climbing:
 		handle_movement(delta)
 	else:
@@ -37,12 +39,12 @@ func keyscontrol():
 	if Input.is_action_just_pressed("esc"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if Input.is_action_just_pressed("climb") and can_climb:
-		print("fase2")
+
 		is_climbing = true
 		point = mamoot.point
 		mamoot.being_climbed = true
 	if can_climb == false:
-		print("fase3")
+	
 		is_climbing = false
 		if mamoot:
 			mamoot.being_climbed = false
@@ -58,7 +60,7 @@ func speed_control():
 			SPEED = walk_speed
 func handle_climb_sistem(delta):
 	var newpos = Vector3(point.global_position.x,point.global_position.y-1,point.global_position.z)
-	global_position = newpos
+	global_position = lerp(global_position,newpos,03*delta)
 	
 func handle_movement(delta):
 	#global_position = point.global_position
@@ -80,6 +82,8 @@ func handle_movement(delta):
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area.is_in_group("escalable"):
-		print("fase1")
+		
 		can_climb = true
 		mamoot = area.main	
+
+			

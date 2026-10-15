@@ -23,6 +23,7 @@ import/blender/enabled=false
 Exclude=""
 escalable=""
 Player=""
+lock=""
 
 [input]
 

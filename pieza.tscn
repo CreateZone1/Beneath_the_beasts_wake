@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnjs4r5ledlvd"]
+
+[ext_resource type="Script" uid="uid://cpl3ydc81psyq" path="res://pieza.gd" id="1_ko0ci"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a3vs7"]
+size = Vector3(1.0893555, 5.9454956, 2.243164)
+
+[node name="Area3D" type="Area3D" node_paths=PackedStringArray("main", "point", "manager", "pivotplace") groups=["escalable"]]
+script = ExtResource("1_ko0ci")
+main = NodePath(".")
+point = NodePath("")
+manager = NodePath("")
+pivotplace = NodePath("pivot")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.517517, -0.5986328)
+size = Vector3(1, 6.035034, 2.1972656)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["escalable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044677734, 2.4727478, -0.62158203)
+shape = SubResource("BoxShape3D_a3vs7")
+
+[node name="pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, 2.3130746, -0.5915837)

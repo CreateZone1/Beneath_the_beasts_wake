@@ -1,14 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://dte53hwfs8lmo"]
+[gd_scene load_steps=15 format=3 uid="uid://dte53hwfs8lmo"]
 
 [ext_resource type="Script" uid="uid://cndigymm67l1i" path="res://mamoot.gd" id="1_tntu3"]
 [ext_resource type="Script" uid="uid://d2nmrnf2nkdq0" path="res://scalablearea.gd" id="2_13r7u"]
 [ext_resource type="Script" uid="uid://bbhslsisiyucn" path="res://Raycast_manager.gd" id="3_u0o41"]
+[ext_resource type="Script" uid="uid://rrtt4hq3lfad" path="res://cantclimb.gd" id="4_63xeb"]
+[ext_resource type="Script" uid="uid://hkkkd1lvarh6" path="res://chek.gd" id="4_dbdos"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u0o41"]
 size = Vector3(5.6671143, 3.3727722, 4.6419697)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tntu3"]
-size = Vector3(1, 2.9943848, 0.75250244)
+size = Vector3(1, 1.4041138, 0.75250244)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63xeb"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0.09411765, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dbdos"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t2y0b"]
 radius = 1.2519531
@@ -20,10 +28,17 @@ albedo_color = Color(1, 0, 0.25490198, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_u0o41"]
 
-[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_63xeb"]
+radius = 0.25747663
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_63xeb"]
+size = Vector3(5.033554, 1, 6.3542175)
+
+[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point", "pivot")]
 script = ExtResource("1_tntu3")
 agent = NodePath("NavigationAgent3D")
 point = NodePath("grabpoint")
+pivot = NodePath("pivoit")
 
 [node name="mesh" type="CSGBox3D" parent="."]
 transform = Transform3D(-0.029404499, 0, -0.9995676, 0, 1, 0, 0.9995676, 0, -0.029404499, 0.50442183, 3.534679, -0.09365034)
@@ -59,19 +74,39 @@ size = Vector3(0.2756958, 2.6374817, 0.26745987)
 transform = Transform3D(0.37955308, -0.92516994, 0, 0.92516994, 0.37955308, 0, 0, 0, 1, 2.5528378, -0.0005583763, -0.6829605)
 size = Vector3(0.2756958, 2.6374817, 0.26745987)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="mesh"]
+[node name="brazoderecho" type="CSGBox3D" parent="mesh"]
 transform = Transform3D(1, 0, 0, 0, 1.5426648, 0, 0, 0, 1, 0.719239, -1.7008982, 1.7210059)
 size = Vector3(1.0136719, 2.8746033, 0.71795654)
 
-[node name="Area3D" type="Area3D" parent="mesh/CSGBox3D4" node_paths=PackedStringArray("main") groups=["escalable"]]
+[node name="Area3D" type="Area3D" parent="mesh/brazoderecho" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
 main = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D4/Area3D"]
-transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/brazoderecho/Area3D"]
+transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, 0.838417, -0.016754031)
 shape = SubResource("BoxShape3D_tntu3")
 
-[node name="pivot" type="Node3D" parent="mesh/CSGBox3D4/Area3D"]
+[node name="pivot" type="Node3D" parent="mesh/brazoderecho/Area3D"]
+
+[node name="grabpoint" type="Node3D" parent="mesh/brazoderecho"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4957483)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mesh/brazoderecho/grabpoint"]
+transform = Transform3D(0.38596985, 0, -9.313226e-10, 0, 0.24889472, 0, 9.313226e-10, 0, 0.38596985, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_63xeb")
+mesh = SubResource("SphereMesh_dbdos")
+
+[node name="pivot" type="Node3D" parent="mesh/brazoderecho"]
+transform = Transform3D(1, 0, 0, 0, 0.99997455, -0.007138336, 0, 0.007138336, 0.99997455, 0, 0, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="mesh/brazoderecho/pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8626451e-09, 0, 1.6160655)
+
+[node name="manager" type="Node3D" parent="mesh/brazoderecho" node_paths=PackedStringArray("raycast", "pivot", "grabpoint")]
+script = ExtResource("3_u0o41")
+raycast = NodePath("../pivot/RayCast3D")
+pivot = NodePath("../pivot")
+grabpoint = NodePath("../grabpoint")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="mesh"]
 transform = Transform3D(1, 0, 0, 0, 1.5426648, 0, 0, 0, 1, 0.719239, -1.7008982, -1.996202)
@@ -82,7 +117,7 @@ script = ExtResource("2_13r7u")
 main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D5/Area3D"]
-transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
+transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, 0.82769495, -0.016754031)
 shape = SubResource("BoxShape3D_tntu3")
 
 [node name="pivot" type="Node3D" parent="mesh/CSGBox3D5/Area3D"]
@@ -96,7 +131,7 @@ script = ExtResource("2_13r7u")
 main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D6/Area3D"]
-transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
+transform = Transform3D(1.0000203, 0, -2.1234155e-07, 0, 0.9999998, 0, 2.1234155e-07, 0, 1.0000203, -1.1920929e-06, 0.68613076, -0.016753316)
 shape = SubResource("BoxShape3D_tntu3")
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="mesh"]
@@ -108,7 +143,7 @@ script = ExtResource("2_13r7u")
 main = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D7/Area3D" groups=["escalable"]]
-transform = Transform3D(1.0000077, 0, -9.685755e-08, 0, 0.9999998, 0, 9.685755e-08, 0, 1.0000077, 2.3841858e-07, -0.057006717, -0.016754031)
+transform = Transform3D(1.0000216, 0, -2.2724271e-07, 0, 0.9999998, 0, 2.2724271e-07, 0, 1.0000216, -2.1457672e-06, 0.56982434, -0.016755342)
 shape = SubResource("BoxShape3D_tntu3")
 
 [node name="pivot" type="Node3D" parent="mesh/CSGBox3D7"]
@@ -127,7 +162,6 @@ pivot = NodePath("../pivoit")
 grabpoint = NodePath("../grabpoint")
 
 [node name="grabpoint" type="Node3D" parent="."]
-visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="grabpoint"]
 transform = Transform3D(0.265, 0, 0, 0, 0.265, 0, 0, 0, 0.265, 0, 0, 0)
@@ -135,11 +169,10 @@ material_override = SubResource("StandardMaterial3D_u0o41")
 mesh = SubResource("SphereMesh_u0o41")
 
 [node name="pivoit" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6351452, 2.758779, -1.7338953)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6351452, 3.2067904, -1.7338953)
 
 [node name="RayCast3D" type="RayCast3D" parent="pivoit"]
-transform = Transform3D(0.041247897, 0, 0.9991491, 0, 1, 0, -0.99914896, 0, 0.0412479, 0.08254242, 1.5312123, -4.342544)
+transform = Transform3D(0.041247897, 0, 0.9991491, 0, 1, 0, -0.99914896, 0, 0.0412479, 0.16503821, 0.017147541, -6.3408422)
 target_position = Vector3(0, 0, -7.055)
 collide_with_areas = true
 collide_with_bodies = false
@@ -148,5 +181,29 @@ collide_with_bodies = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="pivoit"]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="pivoit"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.3630176)
+[node name="Area3D" type="Area3D" parent="pivoit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79984474, 0)
+script = ExtResource("4_dbdos")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pivoit/Area3D"]
+shape = SubResource("SphereShape3D_63xeb")
+
+[node name="cantclimb" type="Area3D" parent="." groups=["lock"]]
+script = ExtResource("4_63xeb")
+eje_bloqueado = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cantclimb" groups=["lock"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7542343, 4.737252, -1.5996075)
+shape = SubResource("BoxShape3D_63xeb")
+
+[node name="cantclimb2" type="Area3D" parent="." groups=["lock"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.4340105, 0)
+script = ExtResource("4_63xeb")
+eje_bloqueado = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cantclimb2" groups=["lock"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7542343, 4.737252, -1.5996075)
+shape = SubResource("BoxShape3D_63xeb")
+
+[connection signal="area_entered" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_entered"]
+[connection signal="area_exited" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_exited"]

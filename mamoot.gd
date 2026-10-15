@@ -23,7 +23,8 @@ func _ready() -> void:
 		agent.target_position = target_obj.global_position
 
 func _physics_process(delta: float) -> void:
-	
+	if !being_climbed:
+		pivot.position.y = player.position.y+1
 	raycast_pivot.being_climbed = being_climbed 
 		
 	if active:
@@ -63,3 +64,7 @@ func upd() -> void:
 	index = (index + 1) % poses.size()
 	target_obj = poses[index]
 	agent.target_position = target_obj.global_position
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	pass # Replace with function body.
