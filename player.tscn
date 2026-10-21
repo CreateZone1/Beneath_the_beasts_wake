@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf4bjoq4jo1nl"]
+[gd_scene load_steps=11 format=3 uid="uid://cf4bjoq4jo1nl"]
 
 [ext_resource type="Script" uid="uid://dfxb37rf7f7xf" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://d2yl8x7govrly" path="res://proto_sprites}/empt.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://blncf6njewio8" path="res://proto_sprites}/rect817.png" id="3_hqtel"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 height = 1.7426758
@@ -10,8 +12,16 @@ height = 1.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
+size = Vector3(0.32183838, 1.4979248, 0.34448242)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
-size = Vector3(0.6202545, 1, 0.3696289)
+size = Vector3(0.47956085, 1, 0.3696289)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3pqv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4flbx"]
+font_size = 36
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ray", "pivot", "sprarm", "camera", "model", "climbarea") groups=["Exclude", "Player"]]
 script = ExtResource("1_4flbx")
@@ -20,7 +30,7 @@ pivot = NodePath("pivotofp/Node3D")
 sprarm = NodePath("pivotofp/Node3D/SpringArm3D")
 camera = NodePath("pivotofp/Node3D/SpringArm3D/Camera3D")
 model = NodePath("MeshInstance3D")
-climbarea = NodePath("Area3D")
+climbarea = NodePath("MeshInstance3D/Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9811746, 0)
@@ -40,11 +50,22 @@ target_position = Vector3(0, 0, -2.81)
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="checl" type="Area3D" parent="MeshInstance3D"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03838539, 1.7162747, -0.7737032)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/checl"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0020644665, 0.1718868, -0.79546595)
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9907106, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03196144, 1.7162747, -0.7737032)
 shape = SubResource("BoxShape3D_4flbx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(0.23504072, 0, 0, 0, 0.23504072, 0, 0, 0, 2.8480675, 0.7678164, -0.071905136, 0.5021316)
+mesh = SubResource("BoxMesh_i3pqv")
 
 [node name="pivotofp" type="Node3D" parent="."]
 
@@ -59,4 +80,54 @@ spring_length = 3.45
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.96323705, 0)
 cull_mask = 1048573
 
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -85.0
+offset_right = 91.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "TECLA"
+label_settings = SubResource("LabelSettings_4flbx")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control/Label"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.5
+offset_top = -7.0
+offset_right = 54.5
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 2.99
+step = 0.01
+value = 1.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_i3pqv")
+texture_progress = ExtResource("3_hqtel")
+
+[connection signal="area_entered" from="MeshInstance3D/checl" to="." method="_on_checl_area_entered"]
+[connection signal="area_exited" from="MeshInstance3D/checl" to="." method="_on_checl_area_exited"]
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

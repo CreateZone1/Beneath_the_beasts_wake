@@ -1,13 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://dte53hwfs8lmo"]
+[gd_scene load_steps=23 format=3 uid="uid://dte53hwfs8lmo"]
 
 [ext_resource type="Script" uid="uid://cndigymm67l1i" path="res://mamoot.gd" id="1_tntu3"]
 [ext_resource type="Script" uid="uid://d2nmrnf2nkdq0" path="res://scalablearea.gd" id="2_13r7u"]
+[ext_resource type="Texture2D" uid="uid://dpw8febfk7ubb" path="res://proto_sprites}/rect2.png" id="3_0gtrw"]
 [ext_resource type="Script" uid="uid://bbhslsisiyucn" path="res://Raycast_manager.gd" id="3_u0o41"]
 [ext_resource type="Script" uid="uid://rrtt4hq3lfad" path="res://cantclimb.gd" id="4_63xeb"]
 [ext_resource type="Script" uid="uid://hkkkd1lvarh6" path="res://chek.gd" id="4_dbdos"]
+[ext_resource type="Texture2D" uid="uid://d2yl8x7govrly" path="res://proto_sprites}/empt.png" id="6_maoo3"]
+[ext_resource type="Texture2D" uid="uid://blncf6njewio8" path="res://proto_sprites}/rect817.png" id="7_0gtrw"]
+[ext_resource type="Texture2D" uid="uid://chskxtyiqke7u" path="res://proto_sprites}/path2.png" id="9_jeaon"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u0o41"]
 size = Vector3(5.6671143, 3.3727722, 4.6419697)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0gtrw"]
+size = Vector3(0.46875, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tntu3"]
 size = Vector3(1, 1.4041138, 0.75250244)
@@ -34,48 +41,166 @@ radius = 0.25747663
 [sub_resource type="BoxShape3D" id="BoxShape3D_63xeb"]
 size = Vector3(1.6599998, 0.15026855, 2.6025925)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_dbdos"]
-viewport_path = NodePath("SubViewportContainer/SubViewport")
+[sub_resource type="Animation" id="Animation_jeaon"]
+resource_name = "MOVE1"
+length = 2.867
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh/pech:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.53333336, 0.96666664, 1.3, 1.869359, 2.2666667, 2.5, 2.8333333),
+"transitions": PackedFloat32Array(2.378414, 0.5176325, 2.1435468, 0.784584, 0.13869624, 3.4822025, 0.18946446, 0.18946446),
+"update": 0,
+"values": [Vector3(-2.5178025, -0.56553125, 0.07161331), Vector3(-2.533143, -0.56553125, -0.44986004), Vector3(-2.5372577, -0.56553125, -0.5897289), Vector3(-2.533143, -0.56553125, -0.44986004), Vector3(-2.5026112, -0.56553125, 0.588038), Vector3(-2.5013025, -0.56553125, 0.6325407), Vector3(-2.5026112, -0.56553125, 0.588038), Vector3(-2.5178025, -0.56553125, 0.07161331)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("mesh/pech:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.54, 0.96666664, 1.3066666, 1.869359, 2.2666667, 2.5, 2.8333333),
+"transitions": PackedFloat32Array(2.378414, 0.5176325, 2.1435468, 0.784584, 0.13869624, 3.4822025, 0.18946446, 0.18946446),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.44800857, 0), Vector3(0, 0.5473876, 0), Vector3(0, 0.44800857, 0), Vector3(0, -0.47591645, 0), Vector3(0, -0.58203954, 0), Vector3(0, -0.47591645, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("mesh/head:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0066666603, 0.53333336, 0.95, 1.6333333, 2.3, 2.84),
+"transitions": PackedFloat32Array(3.605001, 0.120742105, 1.9318731, 0.12500004, 3.0314343, 3.0314343),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.49372458, 0), Vector3(0, -0.77962846, 0), Vector3(0, 0.566691, 0), Vector3(0, 0.7042753, 0), Vector3(0, 0, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4, 1.5333333, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0.5],
+"method": &"camshot"
+}, {
+"args": [0.8],
+"method": &"camshot"
+}, {
+"args": [0.5],
+"method": &"camshot"
+}]
+}
 
-[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point", "pr_vida", "pivot")]
+[sub_resource type="Animation" id="Animation_mya6u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh/pech:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.5178025, -0.56553125, 0.07161331)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("mesh/pech:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("mesh/head:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mya6u"]
+_data = {
+&"MOVE1": SubResource("Animation_jeaon"),
+&"RESET": SubResource("Animation_mya6u")
+}
+
+[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point", "pr_vida", "pivot", "anim")]
 script = ExtResource("1_tntu3")
+vida = 500.0
 agent = NodePath("NavigationAgent3D")
 point = NodePath("grabpoint")
-pr_vida = NodePath("SubViewportContainer/SubViewport/ProgressBar")
+pr_vida = NodePath("SubViewportContainer/SubViewport/TextureProgressBar")
+txt1 = ExtResource("7_0gtrw")
+txt2 = ExtResource("3_0gtrw")
 pivot = NodePath("pivoit")
+anim = NodePath("AnimationPlayer")
 
 [node name="mesh" type="CSGBox3D" parent="."]
 transform = Transform3D(-0.029404499, 0, -0.9995676, 0, 1, 0, 0.9995676, 0, -0.029404499, 0.50442183, 3.534679, -0.09365034)
 size = Vector3(2.2548828, 3.7870483, 3.4454346)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5178025, -0.56553125, 0.07161331)
+[node name="pech" type="CSGBox3D" parent="mesh"]
+transform = Transform3D(1.0000008, 0, 0, 0, 1, 0, 0, 0, 1.0000008, -2.5178025, -0.56553125, 0.07161331)
 size = Vector3(3.5177002, 3.194168, 3.4454346)
 
-[node name="pivot" type="Node3D" parent="mesh/CSGBox3D3"]
+[node name="pivot" type="Node3D" parent="mesh/pech"]
 
-[node name="Area3D2" type="Area3D" parent="mesh/CSGBox3D3" node_paths=PackedStringArray("main") groups=["escalable"]]
+[node name="Area3D2" type="Area3D" parent="mesh/pech" node_paths=PackedStringArray("main") groups=["escalable"]]
 script = ExtResource("2_13r7u")
 main = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/CSGBox3D3/Area3D2" groups=["escalable"]]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/pech/Area3D2" groups=["escalable"]]
 transform = Transform3D(1, 0, 1.937151e-07, 0, 1, 0, -1.937151e-07, 0, 1, 0.9595605, 0.08073425, -0.36265972)
 shape = SubResource("BoxShape3D_u0o41")
 
-[node name="a" type="CSGBox3D" parent="mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3697276, 1.4356143, -0.10853577)
+[node name="weakpoint" type="Area3D" parent="mesh/pech" groups=["debil"]]
+transform = Transform3D(-0.02940447, 0, 0.9995667, 0, 1, 0, -0.9995667, 0, -0.02940447, 0.82559085, 0.49664378, -2.1774626)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/pech/weakpoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.265625, 0, 0)
+shape = SubResource("BoxShape3D_0gtrw")
+
+[node name="Sprite3D" type="Sprite3D" parent="mesh/pech/weakpoint"]
+transform = Transform3D(0.011007164, 0, 0.34356803, 0, 0.3437443, 0, -0.34356803, 0, 0.011007164, -0.45017886, -0.07189822, 0.09705424)
+modulate = Color(6.3557987, 6.3557987, 6.3557987, 0.75686276)
+texture = ExtResource("9_jeaon")
+
+[node name="head" type="CSGBox3D" parent="mesh"]
+transform = Transform3D(1.0000002, 0, 0, 0, 1, 0, 0, 0, 1.0000002, 1.3697276, 1.4356141, -0.10853577)
 size = Vector3(2.4074707, 2.6374817, 1.4582825)
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.665205, 0.27333903, -0.1417427)
+[node name="CSGBox3D9" type="CSGBox3D" parent="mesh/head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2954776, -1.1622751, -0.033207)
 size = Vector3(0.86779785, 2.6374817, 0.83960724)
 
-[node name="CSGBox3D10" type="CSGBox3D" parent="mesh"]
-transform = Transform3D(0.37955308, -0.92516994, 0, 0.92516994, 0.37955308, 0, 0, 0, 1, 2.5528378, -0.0005583763, 0.3530655)
+[node name="CSGBox3D10" type="CSGBox3D" parent="mesh/head"]
+transform = Transform3D(0.3795531, -0.92517006, 0, 0.92516994, 0.37955308, 0, 9.313226e-10, 1.8626451e-09, 1, 1.1831102, -1.4361725, 0.46160132)
 size = Vector3(0.2756958, 2.6374817, 0.26745987)
 
-[node name="CSGBox3D11" type="CSGBox3D" parent="mesh"]
-transform = Transform3D(0.37955308, -0.92516994, 0, 0.92516994, 0.37955308, 0, 0, 0, 1, 2.5528378, -0.0005583763, -0.6829605)
+[node name="CSGBox3D11" type="CSGBox3D" parent="mesh/head"]
+transform = Transform3D(0.3795531, -0.92517006, 0, 0.92516994, 0.37955308, 0, 9.313226e-10, 1.8626451e-09, 1, 1.1831102, -1.4361725, -0.5744248)
 size = Vector3(0.2756958, 2.6374817, 0.26745987)
 
 [node name="brazoderecho" type="CSGBox3D" parent="mesh"]
@@ -97,6 +222,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4957483)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="mesh/brazoderecho/grabpoint"]
 transform = Transform3D(0.38596985, 0, -9.313226e-10, 0, 0.24889472, 0, 9.313226e-10, 0, 0.38596985, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_63xeb")
 mesh = SubResource("SphereMesh_dbdos")
 
@@ -169,6 +295,7 @@ grabpoint = NodePath("../grabpoint")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="grabpoint"]
 transform = Transform3D(0.265, 0, 0, 0, 0.265, 0, 0, 0, 0.265, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_u0o41")
 mesh = SubResource("SphereMesh_u0o41")
 
@@ -182,6 +309,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="pivoit/RayCast3D"]
+visible = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="pivoit"]
 
@@ -215,26 +343,46 @@ shape = SubResource("BoxShape3D_63xeb")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -45.0
-offset_right = -594.0
-offset_bottom = -647.0
+offset_left = 326.0
+offset_top = 18.0
+offset_right = -285.0
+offset_bottom = -607.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(558, 46)
+size = Vector2i(541, 23)
 render_target_update_mode = 4
 
-[node name="ProgressBar" type="ProgressBar" parent="SubViewportContainer/SubViewport"]
-offset_top = 2.0
-offset_right = 554.0
-offset_bottom = 46.0
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SubViewportContainer/SubViewport"]
+z_index = 1
+offset_left = 2.0
+offset_top = -9.0
+offset_right = 541.0
+offset_bottom = 20.0
+max_value = 500.0
+step = 0.1
+nine_patch_stretch = true
+texture_under = ExtResource("6_maoo3")
+texture_progress = ExtResource("7_0gtrw")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9109242, 7.133996, 0)
-texture = SubResource("ViewportTexture_dbdos")
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+offset_left = 2.0
+offset_top = -9.0
+offset_right = 540.0
+offset_bottom = 31.0
+color = Color(0, 0, 0, 1)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mya6u")
+}
 
 [connection signal="area_entered" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_entered"]
 [connection signal="area_exited" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

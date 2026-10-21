@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://doacr0viobp1i"]
+
+[ext_resource type="Texture2D" uid="uid://dorh6ttj13yj8" path="res://proto_sprites}/dark/dark_texture1_text.png" id="1_37kl0"]
+[ext_resource type="PackedScene" uid="uid://cf4bjoq4jo1nl" path="res://player.tscn" id="2_8uh7m"]
+[ext_resource type="PackedScene" uid="uid://dte53hwfs8lmo" path="res://mamoot.tscn" id="3_6uqi0"]
+[ext_resource type="Shader" uid="uid://cq36eg2flmfxj" path="res://test.gdshader" id="4_ykrsh"]
+[ext_resource type="PackedScene" uid="uid://cded8lxfihb7t" path="res://raycast.tscn" id="5_ykrsh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6uqi0"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ppyta"]
+sky_material = SubResource("ProceduralSkyMaterial_6uqi0")
+
+[sub_resource type="Environment" id="Environment_ykrsh"]
+background_mode = 2
+sky = SubResource("Sky_ppyta")
+tonemap_mode = 2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6uqi0"]
+vertices = PackedVector3Array(-105.804794, 0.09882069, -95.350845, -105.804794, 0.09882069, 82.899155, 91.695206, 0.09882069, 82.899155, 91.695206, 0.09882069, -95.350845)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8uh7m"]
+albedo_color = Color(0.2824075, 0.28240746, 0.28240746, 1)
+albedo_texture = ExtResource("1_37kl0")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv2_triplanar = true
+texture_filter = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g14j6"]
+shader = ExtResource("4_ykrsh")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/power = -0.07000022195535927
+shader_parameter/iterations = 6.70000008493684
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ykrsh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.490746, 0, 0)
+
+[node name="2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46853638, 0, -19.543495)
+
+[node name="3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.102089, 0, 0)
+
+[node name="34" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3647232, 0, 17.613731)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_6uqi0")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9941063, -0.31231213, -6.17626)
+use_collision = true
+size = Vector3(198.62137, 0.17773438, 179.34917)
+material = SubResource("StandardMaterial3D_8uh7m")
+
+[node name="Raycast" parent="." instance=ExtResource("5_ykrsh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 48)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_g14j6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="CharacterBody3D" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_8uh7m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0083065, -0.22344494, 13.51123)
+walk_speed = null
+run_speed = null
+climbspeed = 0.5
+streng_multiplier_max = null
+base_damage = 20.0
+buff_damage = null
+sens = null
+
+[node name="papuut" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("target_obj", "poses") instance=ExtResource("3_6uqi0")]
+transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, -4.4444427, 0.06800294, 0.28123045)
+target_obj = NodePath("../../../1")
+poses = [NodePath("../../../1"), NodePath("../../../2"), NodePath("../../../3"), NodePath("../../../34")]

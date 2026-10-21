@@ -39,19 +39,20 @@ func handle_self_position():
 		player.mamoot.manager = $"."
 		player.mamoot.point= $"../grabpoint"
 func InputMovements(delta):
-	print(mode)
+	
 	raycast.look_at(pivot.global_position)
-	var input_dir := Input.get_vector("left", "right", "up", "down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
-	match mode:
-		1:
-			pivot.global_rotation.y += direction.x*player.climbspeed*delta
-			pivot.position.y+= -direction.z*player.climbspeed*delta
-		2:
-			pivot.global_rotation.y += direction.x*player.climbspeed*delta
-			pivot.position.y += max(-direction.z, 0.0) * player.climbspeed * delta
-			
-		3:
-			pivot.global_rotation.y += direction.x*player.climbspeed*delta
-			pivot.position.y += min(-direction.z, 0.0) * player.climbspeed * delta
+	if player.move:
+		var input_dir := Input.get_vector("left", "right", "up", "down")
+		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
+		match mode:
+			1:
+				pivot.global_rotation.y += direction.x*player.climbspeed*delta
+				pivot.position.y+= -direction.z*player.climbspeed*delta
+			2:
+				pivot.global_rotation.y += direction.x*player.climbspeed*delta
+				pivot.position.y += max(-direction.z, 0.0) * player.climbspeed * delta
+				
+			3:
+				pivot.global_rotation.y += direction.x*player.climbspeed*delta
+				pivot.position.y += min(-direction.z, 0.0) * player.climbspeed * delta
 			
