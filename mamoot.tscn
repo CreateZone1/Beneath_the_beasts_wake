@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dte53hwfs8lmo"]
+[gd_scene load_steps=16 format=3 uid="uid://dte53hwfs8lmo"]
 
 [ext_resource type="Script" uid="uid://cndigymm67l1i" path="res://mamoot.gd" id="1_tntu3"]
 [ext_resource type="Script" uid="uid://d2nmrnf2nkdq0" path="res://scalablearea.gd" id="2_13r7u"]
@@ -32,12 +32,16 @@ albedo_color = Color(1, 0, 0.25490198, 1)
 radius = 0.25747663
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_63xeb"]
-size = Vector3(5.033554, 1, 6.3542175)
+size = Vector3(1.6599998, 0.15026855, 2.6025925)
 
-[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point", "pivot")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_dbdos"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[node name="mamoot" type="CharacterBody3D" node_paths=PackedStringArray("agent", "point", "pr_vida", "pivot")]
 script = ExtResource("1_tntu3")
 agent = NodePath("NavigationAgent3D")
 point = NodePath("grabpoint")
+pr_vida = NodePath("SubViewportContainer/SubViewport/ProgressBar")
 pivot = NodePath("pivoit")
 
 [node name="mesh" type="CSGBox3D" parent="."]
@@ -193,7 +197,7 @@ script = ExtResource("4_63xeb")
 eje_bloqueado = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="cantclimb" groups=["lock"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7542343, 4.737252, -1.5996075)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.874918, 5.4551954, -1.5859089)
 shape = SubResource("BoxShape3D_63xeb")
 
 [node name="cantclimb2" type="Area3D" parent="." groups=["lock"]]
@@ -202,8 +206,35 @@ script = ExtResource("4_63xeb")
 eje_bloqueado = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="cantclimb2" groups=["lock"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7542343, 4.737252, -1.5996075)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7542343, 5.1615243, -1.5996075)
 shape = SubResource("BoxShape3D_63xeb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -45.0
+offset_right = -594.0
+offset_bottom = -647.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(558, 46)
+render_target_update_mode = 4
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewportContainer/SubViewport"]
+offset_top = 2.0
+offset_right = 554.0
+offset_bottom = 46.0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9109242, 7.133996, 0)
+texture = SubResource("ViewportTexture_dbdos")
 
 [connection signal="area_entered" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_entered"]
 [connection signal="area_exited" from="pivoit/Area3D" to="pivoit/Area3D" method="_on_area_exited"]

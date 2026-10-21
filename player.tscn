@@ -11,12 +11,14 @@ height = 1.8
 [sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
+size = Vector3(0.6202545, 1, 0.3696289)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "sprarm", "camera", "model", "climbarea") groups=["Exclude", "Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ray", "pivot", "sprarm", "camera", "model", "climbarea") groups=["Exclude", "Player"]]
 script = ExtResource("1_4flbx")
-pivot = NodePath("Node3D")
-sprarm = NodePath("Node3D/SpringArm3D")
-camera = NodePath("Node3D/SpringArm3D/Camera3D")
+ray = NodePath("MeshInstance3D/RayCast3D")
+pivot = NodePath("pivotofp/Node3D")
+sprarm = NodePath("pivotofp/Node3D/SpringArm3D")
+camera = NodePath("pivotofp/Node3D/SpringArm3D/Camera3D")
 model = NodePath("MeshInstance3D")
 climbarea = NodePath("Area3D")
 
@@ -32,20 +34,29 @@ mesh = SubResource("CapsuleMesh_4flbx")
 transform = Transform3D(1, 0, 0, 0, 0.3, 0, 0, 0, 0.5772173, 0, 0.611398, -0.3070115)
 mesh = SubResource("BoxMesh_4flbx")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.027473569, 0)
-
-[node name="SpringArm3D" type="SpringArm3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96323705, 0)
-spring_length = 3.45
-
-[node name="Camera3D" type="Camera3D" parent="Node3D/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.96323705, 0)
+[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677389, 0)
+target_position = Vector3(0, 0, -2.81)
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7162747, -0.45851767)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03838539, 1.7162747, -0.7737032)
 shape = SubResource("BoxShape3D_4flbx")
+
+[node name="pivotofp" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="pivotofp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.027473569, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="pivotofp/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96323705, 0)
+spring_length = 3.45
+
+[node name="Camera3D" type="Camera3D" parent="pivotofp/Node3D/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.96323705, 0)
+cull_mask = 1048573
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

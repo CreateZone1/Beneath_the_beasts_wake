@@ -1,5 +1,5 @@
 extends CharacterBody3D
-
+@export var vida:=10.0
 @export var speed = 2.0
 @export var agent: NavigationAgent3D
 @export var target_obj: Node3D
@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var rotspeed := 0.6
 @export var active = true
 @export var point:=Node3D
+@export var pr_vida:=ProgressBar
 var realpivot :Node3D
 @export var pivot:Node3D
 @onready var raycast_pivot: Node3D = $RaycastPivot
@@ -16,15 +17,20 @@ var index = 0
 var rotating = false
 var being_climbed = false
 var player
+func Take_Damage(dam):
+	vida-=dam
 func _ready() -> void:
+	pr_vida.max_value =  vida
 	player = get_tree().get_first_node_in_group("Player")
 	if poses.size() > 0:
 		target_obj = poses[index]
 		agent.target_position = target_obj.global_position
 
 func _physics_process(delta: float) -> void:
+	pr_vida.value =  vida
+	$Sprite3D.look_at(player.camera.global_position)
 	if !being_climbed:
-		pivot.position.y = player.position.y+1
+		pivot.position.y = player.position.y+2
 	raycast_pivot.being_climbed = being_climbed 
 		
 	if active:
